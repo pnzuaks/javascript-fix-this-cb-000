@@ -9,7 +9,7 @@ var cake = {
     var status = "Decorating with " + this.topping + ". Ready to eat soon!"
     updateFunction(status)
     setTimeout(() => {
-      updateFunction(serve.apply(this, "Happy Eating!", this.customer))
+      updateFunction(serve.apply(this, ["Happy Eating!", this.customer]))
     }, 2000)
   }
 }
@@ -24,12 +24,12 @@ var pie = {
 }
 
 function makeCake() {
-  var updateCakeStatus = updateStatus.bind(this);
+  var updateCakeStatus = updateStatus.bind(this)
   mix.call(cake, updateCakeStatus)
 }
 
 function makePie() {
-  var updatePieStatus = updateStatus.bind(this);
+  var updatePieStatus = updateStatus.bind(this)
   pie.decorate = cake.decorate.bind(pie)
   mix.call(pie, updatePieStatus)
 }
@@ -38,18 +38,18 @@ function updateStatus(statusText) {
   this.getElementsByClassName("status")[0].innerText = statusText
 }
 
-function bake(updateFunction) {
-  var status = "Baking at " + this.bakeTemp + " for " + this.bakeTime
+function mix(updateFunction) {
+  var status = "Mixing " + this.ingredients.join(", ")
   setTimeout(() => {
-    cool.call(this, updateFunction)
+    bake.call(this, updateFunction)
   }, 2000)
   updateFunction(status)
 }
 
-function mix(updateFunction) {
-  var status = "Mixing " + this.ingredients.join(", ")
-  setTimeout(function() {
-    bake(updateFunction)
+function bake(updateFunction) {
+  var status = "Baking at " + this.bakeTemp + " for " + this.bakeTime
+  setTimeout(() => {
+    cool.call(this, updateFunction)
   }, 2000)
   updateFunction(status)
 }
@@ -71,12 +71,10 @@ function makeDessert() {
 }
 
 function serve(message, customer) {
-  //you shouldn't need to alter this function
   return(customer + ", your " + this.name + " is ready to eat! " + message)
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  //you shouldn't need to alter this function
   var cookLinks = document.getElementsByClassName("js-make")
   for(var i=0; i<cookLinks.length; i++) {
     cookLinks[i].addEventListener("click", makeDessert)
