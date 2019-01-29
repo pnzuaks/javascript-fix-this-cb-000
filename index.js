@@ -30,8 +30,8 @@ function makeCake() {
 
 function makePie() {
   var updatePieStatus = updateStatus.bind(this);
-  mix(updatePieStatus)
-  var decorate = cake.decorate.bind(pie)
+  pie.decorate = cake.decorate.bind(pie)
+  mix.call(pie, updatePieStatus)
 }
 
 function updateStatus(statusText) {
